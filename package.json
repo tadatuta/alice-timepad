@@ -1,0 +1,17 @@
+{
+  "name": "alice-timepad",
+  "version": "1.0.0",
+  "description": "Навык timepad для Яндекс Алисы",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "publish": "npm run archive && npm run yc-function-deploy",
+    "archive": "rm -f package.zip && cd src && zip -r package.zip * && mv package.zip ..",
+    "yc-function-create": "yc serverless function create --name $npm_package_name --description \"$npm_package_description\"",
+    "yc-function-make-public": "yc serverless function set-access-bindings --name=$npm_package_name --access-binding role=serverless.functions.invoker,subject=system:allUsers",
+    "yc-function-deploy": "yc serverless function version create --function-name=$npm_package_name --runtime nodejs12 --entrypoint index.handler --memory 128m --execution-timeout 3s --source-path ./package.zip"
+  },
+  "keywords": ["Alice", "skill", "Yandex Alice", "timepad", "api", "voice",  "Яндекс Алиса", "Алиса", "навык"],
+  "author": "Vladimir Grinenko <i@tadatuta.com>",
+  "license": "MIT"
+}
